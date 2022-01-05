@@ -1,0 +1,12 @@
+stages:
+- stage: plan
+  displayName: 'Terraform plan'
+  jobs:
+  - job: validate
+    displayName: 'Terraform Plan'
+    continueOnError: false
+    steps:
+    - script: |
+        chmod +x ./api-driven-workflow/scripts/tfe-push.sh
+        sed -i -e 's/\r$//' ./api-driven-workflow/scripts/tfe-push.sh
+        ./api-driven-workflow/scripts/tfe-push.sh api-driven-workflow YOUR-TFE-ORGANIZATION/api-driven-workflow

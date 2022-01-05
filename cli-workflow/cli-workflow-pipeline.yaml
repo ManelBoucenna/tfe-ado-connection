@@ -1,0 +1,40 @@
+
+variables:
+- name: terraform-api-token
+  value: YOUR-TFE-API-TOKEN
+
+steps:
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+  displayName: 'Use Terraform latest'
+
+- script: |
+        RC_FILE=".terraformrc"
+        cat > ${RC_FILE} << EOF
+        credentials "app.terraform.io" {
+          token = "$(terraform-api-token)"
+        }
+        EOF
+        mv .terraformrc ~/.terraformrc
+        export TF_CLI_CONFIG_FILE="~/.terraformrc"
+  name: terraform_cloud_credentials
+  displayName: 'Terraform Cloud Credentials'
+  workingDirectory: '$(System.DefaultWorkingDirectory)/cli-workflow'
+
+- task: TerraformCLI@0
+  inputs:
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/cli-workflow'
+    backendType: 'selfConfigured'
+    allowTelemetryCollection: true
+
+- task: TerraformCLI@0
+  inputs:
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/cli-workflow'
+    allowTelemetryCollection: true
+
+- task: TerraformCLI@0
+  inputs:
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/cli-workflow'
+    allowTelemetryCollection: true
