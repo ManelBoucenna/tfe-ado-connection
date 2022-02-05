@@ -1,7 +1,6 @@
 
 variables:
-- name: terraform-api-token
-  value: YOUR-TFE-API-TOKEN
+- group: terraform-env
 
 steps:
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
@@ -38,3 +37,8 @@ steps:
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/cli-workflow'
     allowTelemetryCollection: true
+
+- script: |
+        rm ~/.terraformrc
+  name: terraform_cloud_credentials_cleanup
+  displayName: 'Terraform Cloud Credentials Clean Up'
