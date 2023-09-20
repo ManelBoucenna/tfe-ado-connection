@@ -1,5 +1,7 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+This repository contains Infrastructure as Code template for Azure DevOps environment using Terraform Cloud/Enterprise (TFE) as described in the article:
+
+https://blog.devgenius.io/how-to-configure-azure-devops-with-terraform-enterprise-cac1bbd9810b
 
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
